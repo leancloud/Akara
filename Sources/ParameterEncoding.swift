@@ -130,7 +130,7 @@ public enum ParameterEncoding {
             }
         case .json:
             let options = JSONSerialization.WritingOptions()
-            let data = try! JSONSerialization.data(withJSONObject: parameters as! AnyObject, options: options)
+            let data = try! JSONSerialization.data(withJSONObject: parameters.bridge(), options: options)
 
             if request.headers["Content-Type"] == nil {
                 request.headers["Content-Type"] = "application/json"

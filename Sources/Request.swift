@@ -102,7 +102,11 @@ public final class Request: NSObject, NSCopying {
 
      - note: This method may alter `url` or `body` according to encoding.
      */
-    public func setParameters(_ parameters: [String: AnyObject]?, encoding: ParameterEncoding) {
-        encoding.encode(self, parameters: parameters)
+    public func addParameters(_ parameters: [String: Any], encoding: ParameterEncoding) {
+        var bridged: [String: AnyObject] = [:]
+
+        parameters.bridge().forEach { bridged["\($0)"] = $1 }
+
+        encoding.encode(self, parameters: bridged)
     }
 }

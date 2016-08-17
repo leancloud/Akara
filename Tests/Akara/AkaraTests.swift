@@ -20,13 +20,14 @@ class AkaraTests: XCTestCase {
         let url     = URL(string: "https://httpbin.org/post")
         let request = Request(url: url!)
 
-	let parameters: [String: Any] = [
+        let parameters: [String: Any] = [
             "foo": "bar",
             "baz": [
                 "aaa": "bbb"
             ]
         ]
 
+        request.method = "POST"
         request.addParameters(parameters, encoding: .json)
         let result  = Akara.perform(request)
 

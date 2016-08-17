@@ -28,7 +28,7 @@ public final class Request: NSObject, NSCopying {
     ///         only one can be set on a given request.
     public var body: Data?
 
-    /// Request timeout, if <= 0, it never times out.
+    /// Request timeout, in millisecond. If <= 0, it never times out.
     public var timeout: TimeInterval = 0
 
     /// Curl object.

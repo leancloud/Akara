@@ -8,9 +8,19 @@
 
 import Foundation
 
+/**
+ Response of requset.
+
+ This struct represents server's response.
+ */
 public struct Response {
+    /// The HTTP code.
     public let code: Int
+
+    /// The HTTP headers.
     public let headers: [String: String]
+
+    /// The HTTP body.
     public let body: String
 
     init(code: Int, headers: [String: String], body: String) {

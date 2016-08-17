@@ -8,8 +8,17 @@
 
 import Foundation
 
-public class Error {
+/**
+ Request error.
+
+ A request may return an error in some cases,
+ for example, when network is unavailable, server not found, etc.
+ */
+public struct Error {
+    /// The error code, defined by cURL.
     public let code: Int
+
+    /// The detail reason of error.
     public let message: String
 
     init(code: Int, message: String) {

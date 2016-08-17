@@ -13,7 +13,7 @@ import Surl
  HTTP Request.
  */
 public final class Request: NSObject, NSCopying {
-    /// URL.
+    /// Request URL.
     public var url: URL
 
     /// HTTP method.

@@ -17,6 +17,7 @@ class WriteData {
     init() {}
 }
 
+private
 typealias CurlCallback = @convention(c) (
     input  : UnsafeMutablePointer<Int8>,
     size   : Int,
@@ -81,21 +82,22 @@ func parseHeader(string: String) -> [String: String] {
 
     headerLines.forEach { (line) in
         if let name = headerName(string: line) {
-            headers[name] = headerValue(string: line)
+            headers[name] = headerValue(string: line) ?? ""
         }
     }
 
     return headers
 }
 
-public func perform(_ request: Request) -> Result {
+public
+func perform(_ request: Request) -> Result {
     let curl      = request.curl
     let writeData = WriteData()
     let output    = unsafeBitCast(writeData, to: UnsafeMutablePointer<Void>.self)
 
 #if os(Linux)
-    curl_easy_setopt_pointer(curl, CURLOPT_WRITEHEADER, output)
     curl_easy_setopt_pointer(curl, CURLOPT_FILE, output)
+    curl_easy_setopt_pointer(curl, CURLOPT_WRITEHEADER, output)
 #else
     curl_easy_setopt_pointer(curl, CURLOPT_WRITEDATA, output)
     curl_easy_setopt_pointer(curl, CURLOPT_HEADERDATA, output)
@@ -122,7 +124,7 @@ public func perform(_ request: Request) -> Result {
         return .success(response: response)
     } else {
         let message = String(cString: curl_easy_strerror(code), encoding: String.Encoding.utf8) ?? ""
-        let error = Error(code: Int(code.rawValue), message: message)
+        let error   = Error(code: Int(code.rawValue), message: message)
 
         return .failure(error: error)
     }

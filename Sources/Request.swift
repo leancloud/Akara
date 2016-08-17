@@ -105,7 +105,11 @@ public final class Request: NSObject, NSCopying {
     public func addParameters(_ parameters: [String: Any], encoding: ParameterEncoding) {
         var bridged: [String: AnyObject] = [:]
 
-        parameters.bridge().forEach { bridged["\($0)"] = $1 }
+        #if os(OSX)
+            parameters.forEach { bridged["\($0)"] = $1 as? AnyObject }
+        #else
+            parameters.bridge().forEach { bridged["\($0)"] = $1 }
+        #endif
 
         encoding.encode(self, parameters: bridged)
     }

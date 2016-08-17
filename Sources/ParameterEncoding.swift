@@ -130,7 +130,7 @@ public enum ParameterEncoding {
             }
         case .json:
             let options = JSONSerialization.WritingOptions()
-            let data = try! JSONSerialization.data(withJSONObject: parameters, options: options)
+            let data = try! JSONSerialization.data(withJSONObject: parameters as! AnyObject, options: options)
 
             if request.headers["Content-Type"] == nil {
                 request.headers["Content-Type"] = "application/json"
@@ -187,6 +187,12 @@ public enum ParameterEncoding {
         var allowedCharacterSet = NSMutableCharacterSet.urlQueryAllowed
         allowedCharacterSet.remove(charactersIn: "\(generalDelimitersToEncode)\(subDelimitersToEncode)")
 
-        return string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
+        #if os(Linux)
+            let result = string.bridge().stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacterSet) ?? string
+        #else
+            let result = string.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? string
+        #endif
+
+        return result
     }
 }

@@ -74,7 +74,6 @@ func headerValue(string: String) -> String? {
 
     return nil
 }
-
 private
 func parseHeader(string: String) -> [String: String] {
     var headers: [String: String] = [:]
@@ -94,10 +93,15 @@ public func perform(_ request: Request) -> Result {
     let writeData = WriteData()
     let output    = unsafeBitCast(writeData, to: UnsafeMutablePointer<Void>.self)
 
+#if os(Linux)
+    curl_easy_setopt_pointer(curl, CURLOPT_WRITEHEADER, output)
+    curl_easy_setopt_pointer(curl, CURLOPT_FILE, output)
+#else
     curl_easy_setopt_pointer(curl, CURLOPT_WRITEDATA, output)
-    curl_easy_setopt_func(curl, CURLOPT_WRITEFUNCTION, unsafeBitCast(writeFunction, to: curl_func.self))
-
     curl_easy_setopt_pointer(curl, CURLOPT_HEADERDATA, output)
+#endif
+
+    curl_easy_setopt_func(curl, CURLOPT_WRITEFUNCTION, unsafeBitCast(writeFunction, to: curl_func.self))
     curl_easy_setopt_func(curl, CURLOPT_HEADERFUNCTION, unsafeBitCast(headerFunction, to: curl_func.self))
 
     let code = curl_easy_perform(curl)

@@ -96,10 +96,10 @@ public final class Request: NSObject, NSCoding, NSCopying {
     }
 
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(url,     forKey: "url")
-        aCoder.encode(method,  forKey: "method")
-        aCoder.encode(headers, forKey: "headers")
-        aCoder.encode(body,    forKey: "body")
+        aCoder.encode(url as? AnyObject,     forKey: "url")
+        aCoder.encode(method as? AnyObject,  forKey: "method")
+        aCoder.encode(headers as? AnyObject, forKey: "headers")
+        aCoder.encode(body as? AnyObject,    forKey: "body")
         aCoder.encode(timeout, forKey: "body")
     }
 
@@ -118,7 +118,7 @@ public final class Request: NSObject, NSCoding, NSCopying {
 
      - note: This method may alter `url` or `body` according to encoding.
      */
-    public func setParameters(_ parameters: [String: String]?, encoding: ParameterEncoding) {
+    public func setParameters(_ parameters: [String: AnyObject]?, encoding: ParameterEncoding) {
         encoding.encode(self, parameters: parameters)
     }
 }

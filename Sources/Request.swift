@@ -12,7 +12,7 @@ import Surl
 /**
  HTTP Request.
  */
-public final class Request: NSObject, NSCoding, NSCopying {
+public final class Request: NSObject, NSCopying {
     /// URL.
     public var url: URL
 
@@ -85,22 +85,6 @@ public final class Request: NSObject, NSCoding, NSCopying {
      */
     public init(url: URL) {
         self.url = url
-    }
-
-    public init?(coder aDecoder: NSCoder) {
-        url     = aDecoder.decodeObject(forKey: "url") as! URL
-        method  = aDecoder.decodeObject(forKey: "method") as! String
-        headers = aDecoder.decodeObject(forKey: "headers") as! [String: String]
-        body    = aDecoder.decodeObject(forKey: "data") as? Data
-        timeout = aDecoder.decodeDouble(forKey: "timeout")
-    }
-
-    public func encode(with aCoder: NSCoder) {
-        aCoder.encode(url as? AnyObject,     forKey: "url")
-        aCoder.encode(method as? AnyObject,  forKey: "method")
-        aCoder.encode(headers as? AnyObject, forKey: "headers")
-        aCoder.encode(body as? AnyObject,    forKey: "body")
-        aCoder.encode(timeout, forKey: "body")
     }
 
     public func copy(with zone: NSZone? = nil) -> AnyObject {

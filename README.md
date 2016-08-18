@@ -37,3 +37,9 @@ case .failure(let error):
     print(error.message)
 }
 ```
+
+### Dependency
+
+* cURL with SSL.
+
+  On Ubuntu, you can install cURL by `sudo apt-get install libcurl4-openssl-dev`

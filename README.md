@@ -2,6 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![platform](https://img.shields.io/badge/Platform-Darwin%20%7C%20Linux-brightgreen.svg)
+![platform](https://img.shields.io/badge/Swift-DEVELOPMENT--SNAPSHOT--2016--07--25--a-orange.svg)
 
 A Swift networking library based on cURL.
 
